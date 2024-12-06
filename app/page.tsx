@@ -1,5 +1,4 @@
 "use client";
-
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { useSwipeable } from 'react-swipeable';
@@ -8,6 +7,10 @@ export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [activeSection, setActiveSection] = useState('home');
+  const [currentPortfolioSlide, setCurrentPortfolioSlide] = useState(0);
+  const [currentLocationSlide, setCurrentLocationSlide] = useState(0);
+
+  const delaySlides = 8000
 
   // Array gambar untuk slideshow
   const slides = [
@@ -28,36 +31,6 @@ export default function Home() {
     }
   ];
 
-  // Effect untuk mengatur slideshow otomatis
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentSlide((prevSlide) => 
-        prevSlide === slides.length - 1 ? 0 : prevSlide + 1
-      );
-    }, 10000);
-
-    return () => clearInterval(timer);
-  }, []);
-
-  const nextSlide = () => {
-    setCurrentSlide((prevSlide) => 
-      prevSlide === slides.length - 1 ? 0 : prevSlide + 1
-    );
-  };
-
-  const prevSlide = () => {
-    setCurrentSlide((prevSlide) => 
-      prevSlide === 0 ? slides.length - 1 : prevSlide - 1
-    );
-  };
-
-  const handlers = useSwipeable({
-    onSwipedLeft: nextSlide,
-    onSwipedRight: prevSlide,
-    preventScrollOnSwipe: true,
-    trackMouse: true
-  });
-
   const aboutContent = {
     title: "Tentang Kami",
     company: {
@@ -71,7 +44,8 @@ export default function Home() {
     experience: {
       description: `Dari beberapa pengalaman kerjasama yang telah kami bangun dapat menjadi salah satu pertimbangan memberikan kepercayaan kepada perusahaan kami.`
     },
-    closing: `Demikian, kami ucapkan terimakasih atas kesempatan untuk dapat memberikan beberapa penyampaian tentang perusahaan kami dan kami harapkan kerjasamanya.`,
+    closing: 
+      `Demikian, kami ucapkan terimakasih atas kesempatan untuk dapat memberikan beberapa penyampaian tentang perusahaan kami dan kami harapkan kerjasamanya.`,
     visiMisi: {
       visi: {
         title: "VISI",
@@ -96,8 +70,8 @@ export default function Home() {
     }
   };
 
-  // Array data portfolio untuk slideshow
-  const portfolioSlides = [
+   // Array data portfolio untuk slideshow
+   const portfolioSlides = [
     {
       image: "/images/porto-1.png",
       title: "(ACCOMODATION CLERK / ASST. EXECUTIVE HOUSEKEEPER DI KAPAL PESIAR)",
@@ -112,43 +86,48 @@ export default function Home() {
       image: "/images/porto-3.png", 
       title: "UTILITY CLEANER DI KAPAL PESIAR",
       subtitle: "Pengalaman sebagai staf kapal pesiar internasional",
-    },
-    // Tambahkan slide lainnya sesuai kebutuhan
+    }
   ];
 
-  const contactInfo = {
-    phone: {
-      icon: (
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-        </svg>
-      ),
-      title: "Telepon",
-      info: "+62 813-1468-0003",
-      link: "tel:+6281314680003"
-    },
-    email: {
-      icon: (
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-        </svg>
-      ),
-      title: "Email",
-      info: "irawan.vicka@yahoo.com",
-      link: "mailto:irawan.vicka@yahoo.com"
-    },
-    location: {
-      icon: (
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-        </svg>
-      ),
-      title: "Lokasi",
-      info: "Jl. Trunojoyo III, RT. 002 / RW. 010, Pejagan, Bangkalan 69112",
-      link: "https://maps.app.goo.gl/USYvafkyav3gBYZY9"
-    }
+
+
+  // array gambar lokasi 
+  const locationImages = [
+    "/images/location.png",
+    "/images/location-2.jpeg",
+    "/images/location-3.png"
+  ];
+
+
+  // Effect untuk mengatur slideshow otomatis
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prevSlide) => 
+        prevSlide === slides.length - 1 ? 0 : prevSlide + 1
+      );
+    }, delaySlides);
+
+    return () => clearInterval(timer);
+  }, []);
+
+  const nextSlide = () => {
+    setCurrentSlide((prevSlide) => 
+      prevSlide === slides.length - 1 ? 0 : prevSlide + 1
+    );
   };
+
+  const prevSlide = () => {
+    setCurrentSlide((prevSlide) => 
+      prevSlide === 0 ? slides.length - 1 : prevSlide - 1
+    );
+  };
+
+  const handlers = useSwipeable({
+    onSwipedLeft: nextSlide,
+    onSwipedRight: prevSlide,
+    preventScrollOnSwipe: true,
+    trackMouse: true
+  });
 
   // Effect untuk slideshow portfolio
   useEffect(() => {
@@ -156,12 +135,11 @@ export default function Home() {
       setCurrentPortfolioSlide((prevSlide) => 
         prevSlide === portfolioSlides.length - 1 ? 0 : prevSlide + 1
       );
-    }, 5000); // Ganti slide setiap 5 detik
+    }, delaySlides);
 
     return () => clearInterval(timer);
   }, []);
 
-  const [currentPortfolioSlide, setCurrentPortfolioSlide] = useState(0);
 
   const nextPortfolioSlide = () => {
     setCurrentPortfolioSlide((prevSlide) => 
@@ -175,23 +153,13 @@ export default function Home() {
     );
   };
 
-  // Tambahkan array gambar lokasi di bagian atas file, dekat dengan state lainnya
-  const locationImages = [
-    "/images/location.png",
-    "/images/location-2.jpeg",
-    "/images/location-3.png"
-    // Tambahkan gambar lokasi lainnya sesuai kebutuhan
-  ];
-
-  const [currentLocationSlide, setCurrentLocationSlide] = useState(0);
-
   // Tambahkan useEffect untuk slideshow lokasi
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentLocationSlide((prev) => 
         prev === locationImages.length - 1 ? 0 : prev + 1
       );
-    }, 5000);
+    }, delaySlides);
 
     return () => clearInterval(timer);
   }, []);
@@ -213,7 +181,7 @@ export default function Home() {
   useEffect(() => {
     const handleScroll = () => {
       const sections = ['home', 'about', 'portfolio', 'contact'];
-      const scrollPosition = window.scrollY + 100; // Offset untuk header
+      const scrollPosition = window.scrollY + 100; 
 
       for (const section of sections) {
         const element = document.getElementById(section);
@@ -236,6 +204,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen flex flex-col">
+
       {/* Header/Navbar */}
       <header className="bg-white shadow-md fixed w-full z-10">
         <nav className="container mx-auto px-6 py-4">
@@ -440,7 +409,6 @@ export default function Home() {
 
           {/* Visi & Misi dalam grid terpisah */}
           <div className="grid md:grid-cols-2 gap-12 mt-4">
-            {/* Visi */}
             <div className="bg-white p-6 rounded-lg">
               <h3 className="text-2xl font-semibold mb-4">{aboutContent.visiMisi.visi.title}</h3>
               <p className="text-gray-600">
@@ -454,7 +422,7 @@ export default function Home() {
               <ul className="space-y-2">
                 {aboutContent.visiMisi.misi.points.map((point, index) => (
                   <li key={index} className="flex items-start text-gray-600">
-                    <span className="mr-2">•</span>
+                    <span className="mr-2 font-bold">{index + 1}.</span>
                     <span>{point}</span>
                   </li>
                 ))}
@@ -565,23 +533,56 @@ export default function Home() {
         <h2 className="text-3xl font-bold text-center mb-12">Hubungi Kami</h2>
         
         <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-          {Object.entries(contactInfo).map(([key, value]) => (
-            <a 
-              key={key}
-              href={value.link}
-              className="flex flex-col items-center text-center p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow cursor-pointer"
-              target={key === 'location' ? '_blank' : undefined}
-              rel={key === 'location' ? 'noopener noreferrer' : undefined}
-            >
-              <div className="mb-4 text-blue-600">
-                {value.icon}
-              </div>
-              <h3 className="text-xl font-semibold mb-2">{value.title}</h3>
-              <span className="text-gray-600 hover:text-blue-600 transition-colors">
-                {value.info}
-              </span>
-            </a>
-          ))}
+          {/* Phone */}
+          <a 
+            href="tel:+6281314680003"
+            className="flex flex-col items-center text-center p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow cursor-pointer"
+          >
+            <div className="mb-4 text-blue-600">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+              </svg>
+            </div>
+            <h3 className="text-xl font-semibold mb-2">Telepon</h3>
+            <span className="text-gray-600 hover:text-blue-600 transition-colors">
+              +62 813-1468-0003
+            </span>
+          </a>
+
+          {/* Email */}
+          <a 
+            href="mailto:irawan.vicka@yahoo.com"
+            className="flex flex-col items-center text-center p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow cursor-pointer"
+          >
+            <div className="mb-4 text-blue-600">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+            </div>
+            <h3 className="text-xl font-semibold mb-2">Email</h3>
+            <span className="text-gray-600 hover:text-blue-600 transition-colors">
+              irawan.vicka@yahoo.com
+            </span>
+          </a>
+
+          {/* Location */}
+          <a 
+            href="https://maps.app.goo.gl/USYvafkyav3gBYZY9"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex flex-col items-center text-center p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow cursor-pointer"
+          >
+            <div className="mb-4 text-blue-600">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+            </div>
+            <h3 className="text-xl font-semibold mb-2">Lokasi</h3>
+            <span className="text-gray-600 hover:text-blue-600 transition-colors">
+              Jl. Trunojoyo III, RT. 002 / RW. 010, Pejagan, Bangkalan 69112
+            </span>
+          </a>
         </div>
 
         {/* Map Image Placeholder */}
