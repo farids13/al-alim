@@ -8,10 +8,6 @@ export default {
   ],
   theme: {
     extend: {
-      colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
-      },
       animation: {
         'text-blink': 'textBlink 3s ease-in-out infinite',
       },

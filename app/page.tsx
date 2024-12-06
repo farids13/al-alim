@@ -217,7 +217,7 @@ export default function Home() {
                 height={40}
                 className="mr-3"
               />
-              <span className="text-sm font-semibold">PT. MILLENIAL ALALIIM <br /> INDONESIA</span>
+              <span className="text-sm font-semibold text-black">PT. MILLENIAL ALALIIM <br /> INDONESIA</span>
             </div>
             
             {/* Desktop Navigation dengan active state */}
@@ -231,7 +231,7 @@ export default function Home() {
                 <a
                   key={item.id}
                   href={`#${item.id}`}
-                  className={`transition-colors ${
+                  className={`transition-colors text-black ${
                     activeSection === item.id
                       ? 'text-blue-600 font-semibold'
                       : 'hover:text-blue-600'
@@ -302,7 +302,7 @@ export default function Home() {
       </header>
 
     {/* Hero Section dengan Slideshow */}
-      <section id="home" className="pt-20 bg-gray-50 relative">
+      <section id="home" className="pt-20 bg-white relative">
         <div className="relative h-[900px] overflow-hidden" {...handlers}>
           {/* Tombol Previous */}
           <button 
@@ -351,7 +351,7 @@ export default function Home() {
                 src={slide.image}
                 alt={`Slide ${index + 1}`}
                 fill
-                style={{ objectFit: "cover" }}
+                style={{ objectFit: "cover", objectPosition: "25% center" }}
                 priority={index === 0}
               />
               <div className="absolute inset-0 bg-black bg-opacity-20" />
@@ -382,26 +382,26 @@ export default function Home() {
       </section>
 
       {/* About Section */}
-      <section id="about" className="py-20">
+      <section id="about" className="py-20 bg-white">
         <div className="container mx-auto px-6">
-          <h2 className="text-5xl font-bold text-center mb-12">{aboutContent.company.title}</h2>
-          <h2 className="text-3xl font-bold text-center mb-12">Tentang Kami</h2>
+          <h2 className="text-5xl font-bold text-black text-center mb-12">{aboutContent.company.title}</h2>
+          <h2 className="text-3xl font-bold text-black text-center mb-12">Tentang Kami</h2>
           <div className="grid md:grid-cols-2 gap-12">
             <div className="space-y-4">
-              <h3 className="text-2xl font-semibold">{aboutContent.company.title}</h3>
-              <p className="text-gray-600">
+              <h3 className="text-2xl font-semibold text-black">{aboutContent.company.title}</h3>
+              <p className="text-black">
                 {aboutContent.company.description}
               </p>
-              <p className="text-gray-600">
+              <p className="text-black">
                 {aboutContent.companyProfile.description}
               </p>
             </div>
             <div className="space-y-4">
-              <h3 className="text-2xl font-semibold">Pengalaman Kami</h3>
-              <p className="text-gray-600">
+              <h3 className="text-2xl font-semibold text-black">Pengalaman Kami</h3>
+              <p className="text-black">
                 {aboutContent.experience.description}
               </p>
-              <p className="text-gray-600 mt-4">
+              <p className="text-black mt-4">
                 {aboutContent.closing}
               </p>
             </div>
@@ -410,18 +410,18 @@ export default function Home() {
           {/* Visi & Misi dalam grid terpisah */}
           <div className="grid md:grid-cols-2 gap-12 mt-4">
             <div className="bg-white p-6 rounded-lg">
-              <h3 className="text-2xl font-semibold mb-4">{aboutContent.visiMisi.visi.title}</h3>
-              <p className="text-gray-600">
+              <h3 className="text-2xl font-semibold mb-4 text-black">{aboutContent.visiMisi.visi.title}</h3>
+              <p className="text-black">
                 {aboutContent.visiMisi.visi.content}
               </p>
             </div>
 
             {/* Misi */}
             <div className="bg-white p-6 rounded-lg">
-              <h3 className="text-2xl font-semibold mb-4">{aboutContent.visiMisi.misi.title}</h3>
+              <h3 className="text-2xl font-semibold mb-4 text-black">{aboutContent.visiMisi.misi.title}</h3>
               <ul className="space-y-2">
                 {aboutContent.visiMisi.misi.points.map((point, index) => (
-                  <li key={index} className="flex items-start text-gray-600">
+                  <li key={index} className="flex items-start text-black">
                     <span className="mr-2 font-bold">{index + 1}.</span>
                     <span>{point}</span>
                   </li>
@@ -432,10 +432,10 @@ export default function Home() {
 
           {/* Strategi Perusahaan */}
           <div className="mt-8 bg-white p-6 rounded-lg">
-            <h3 className="text-2xl font-semibold mb-4">{aboutContent.strategi.title}</h3>
+            <h3 className="text-2xl font-semibold mb-4 text-black">{aboutContent.strategi.title}</h3>
             <ul className="space-y-4">
               {aboutContent.strategi.points.map((point, index) => (
-                <li key={index} className="flex items-start text-gray-600">
+                <li key={index} className="flex items-start text-black">
                   <span className="mr-2 font-bold">{index + 1}.</span>
                   <span>{point}</span>
                 </li>
@@ -446,9 +446,9 @@ export default function Home() {
       </section>
 
       {/* Portfolio Section */}
-      <section id="portfolio" className="py-20 bg-gray-50">
+      <section id="portfolio" className="py-20 bg-white">
         <div className="container mx-auto px-6">
-          <h2 className="text-3xl font-bold text-center mb-12">Portfolio</h2>
+          <h2 className="text-3xl font-bold text-black text-center mb-12">Portfolio</h2>
           
           <div className="relative h-[800px] overflow-hidden rounded-xl">
             {/* Navigation Buttons */}
@@ -530,7 +530,7 @@ export default function Home() {
       {/* Contact Section */}
     <section id="contact" className="py-20 bg-white">
       <div className="container mx-auto px-6">
-        <h2 className="text-3xl font-bold text-center mb-12">Hubungi Kami</h2>
+        <h2 className="text-3xl font-bold text-black text-center mb-12">Hubungi Kami</h2>
         
         <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
           {/* Phone */}
@@ -543,8 +543,8 @@ export default function Home() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
               </svg>
             </div>
-            <h3 className="text-xl font-semibold mb-2">Telepon</h3>
-            <span className="text-gray-600 hover:text-blue-600 transition-colors">
+            <h3 className="text-xl font-semibold mb-2 text-black">Telepon</h3>
+            <span className="text-black hover:text-blue-600 transition-colors">
               +62 813-1468-0003
             </span>
           </a>
@@ -559,8 +559,8 @@ export default function Home() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
               </svg>
             </div>
-            <h3 className="text-xl font-semibold mb-2">Email</h3>
-            <span className="text-gray-600 hover:text-blue-600 transition-colors">
+            <h3 className="text-xl font-semibold mb-2 text-black">Email</h3>
+            <span className="text-black hover:text-blue-600 transition-colors">
               irawan.vicka@yahoo.com
             </span>
           </a>
@@ -578,8 +578,8 @@ export default function Home() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
               </svg>
             </div>
-            <h3 className="text-xl font-semibold mb-2">Lokasi</h3>
-            <span className="text-gray-600 hover:text-blue-600 transition-colors">
+            <h3 className="text-xl font-semibold mb-2 text-black">Lokasi</h3>
+            <span className="text-black hover:text-blue-600 transition-colors">
               Jl. Trunojoyo III, RT. 002 / RW. 010, Pejagan, Bangkalan 69112
             </span>
           </a>
@@ -693,7 +693,7 @@ export default function Home() {
                   <li key={link.href}>
                     <a 
                       href={link.href}
-                      className="text-blue-200 hover:text-white transition-colors duration-200 text-sm flex items-center"
+                      className="text-blue-200 hover:text-blue-100 transition-colors duration-200 text-sm flex items-center"
                     >
                       <svg 
                         className="w-3 h-3 mr-2" 
