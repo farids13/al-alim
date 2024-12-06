@@ -13,7 +13,7 @@ export default function Home() {
   const slides = [
     {
       image: "/images/com-9.jpeg",
-      title: "AL - ALIM INDONESIA",
+      title: "AL - ALIIM INDONESIA",
       subtitle: "Training Center Hotel & Cruises Ship"
     },
     {
@@ -388,7 +388,9 @@ export default function Home() {
               <div className="absolute inset-0 bg-black bg-opacity-20" />
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="text-center text-white">
-                  <h1 className="text-5xl font-bold mb-4">{slide.title}</h1>Í
+                  <h1 className="text-5xl font-bold mb-4 animate-text-blink">
+                    {slide.title}
+                  </h1>
                   <p className="text-xl mb-8">{slide.subtitle}</p>
                 </div>
               </div>
