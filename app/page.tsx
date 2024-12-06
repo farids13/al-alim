@@ -7,6 +7,7 @@ import { useSwipeable } from 'react-swipeable';
 export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [activeSection, setActiveSection] = useState('home');
 
   // Array gambar untuk slideshow
   const slides = [
@@ -60,7 +61,7 @@ export default function Home() {
   const aboutContent = {
     title: "Tentang Kami",
     company: {
-      title: "PT. MILENIAL ALALIM INDONESIA",
+      title: "PT. MILENIAL ALALIIM INDONESIA",
       description: `Merupakan salah satu perusahaan di Kota Bangkalan yang bergerak di bidang Pelatihan Kerja Pariwisata dan Perhotelan Swasta. Perusahaan kami menawarkan kerja sama dengan berbagai perusahaan nasional maupun instansi pemerintah berdasarkan bidang keahlian kami.`
     },
     companyProfile: {
@@ -70,7 +71,29 @@ export default function Home() {
     experience: {
       description: `Dari beberapa pengalaman kerjasama yang telah kami bangun dapat menjadi salah satu pertimbangan memberikan kepercayaan kepada perusahaan kami.`
     },
-    closing: `Demikian, kami ucapkan terimakasih atas kesempatan untuk dapat memberikan beberapa penyampaian tentang perusahaan kami dan kami harapkan kerjasamanya.`
+    closing: `Demikian, kami ucapkan terimakasih atas kesempatan untuk dapat memberikan beberapa penyampaian tentang perusahaan kami dan kami harapkan kerjasamanya.`,
+    visiMisi: {
+      visi: {
+        title: "VISI",
+        content: "Menjadi lembaga yang menghasilkan SDM yang kompeten, berkualitas, yang beraneka guna, terampil dan siap kerja."
+      },
+      misi: {
+        title: "MISI",
+        points: [
+          "Menghasilkan SDM yang mandiri, percaya diri dan berani mengembangkan potensi yang dimilikinya.",
+          "Membangun masyarakat yang berkualitas diri dalam menciptakan lapangan kerja.",
+          "Membantu pemberantasan pengangguran dan penyaluran pekerjaan setelah pendidikan selesai."
+        ]
+      }
+    },
+    strategi: {
+      title: "STRATEGI PERUSAHAAN",
+      points: [
+        "Melatih tenaga kerja dan menyediakan tenaga kerja yang sesuai dengan kebutuhan perusahaan atau pasar tenaga kerja.",
+        "Peningkatan kerjasama dengan stakeholder dan pemerintah dalam penyerapan output lulusan yang ada di lembaga.",
+        "Menjaga komitmen terhadap kualitas dan pelayanan yang baik kepada peserta pelatihan."
+      ]
+    }
   };
 
   // Array data portfolio untuk slideshow
@@ -123,7 +146,7 @@ export default function Home() {
       ),
       title: "Lokasi",
       info: "Jl. Trunojoyo III, RT. 002 / RW. 010, Pejagan, Bangkalan 69112",
-      link: "https://maps.google.com/?q=Jl. Trunojoyo III, RT. 002 / RW. 010, Pejagan, Bangkalan 69112"
+      link: "https://maps.app.goo.gl/USYvafkyav3gBYZY9"
     }
   };
 
@@ -186,6 +209,31 @@ export default function Home() {
     );
   };
 
+  // Tambahkan useEffect untuk mendeteksi scroll
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = ['home', 'about', 'portfolio', 'contact'];
+      const scrollPosition = window.scrollY + 100; // Offset untuk header
+
+      for (const section of sections) {
+        const element = document.getElementById(section);
+        if (element) {
+          const { offsetTop, offsetHeight } = element;
+          if (
+            scrollPosition >= offsetTop && 
+            scrollPosition < offsetTop + offsetHeight
+          ) {
+            setActiveSection(section);
+            break;
+          }
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
     <div className="min-h-screen flex flex-col">
       {/* Header/Navbar */}
@@ -200,15 +248,29 @@ export default function Home() {
                 height={40}
                 className="mr-3"
               />
-              <span className="text-sm">PT MILLENIAL ALALIIM <br /> INDONESIA</span>
+              <span className="text-sm font-semibold">PT. MILLENIAL ALALIIM <br /> INDONESIA</span>
             </div>
             
-            {/* Desktop Navigation */}
+            {/* Desktop Navigation dengan active state */}
             <div className="hidden md:flex items-center space-x-8">
-              <a href="#home" className="hover:text-blue-600 transition-colors">Home</a>
-              <a href="#about" className="hover:text-blue-600 transition-colors">About</a>
-              <a href="#services" className="hover:text-blue-600 transition-colors">Services</a>
-              <a href="#contact" className="hover:text-blue-600 transition-colors">Contact</a>
+              {[
+                { id: 'home', label: 'Home' },
+                { id: 'about', label: 'About Us' },
+                { id: 'portfolio', label: 'Portfolio' },
+                { id: 'contact', label: 'Contact' }
+              ].map((item) => (
+                <a
+                  key={item.id}
+                  href={`#${item.id}`}
+                  className={`transition-colors ${
+                    activeSection === item.id
+                      ? 'text-blue-600 font-semibold'
+                      : 'hover:text-blue-600'
+                  }`}
+                >
+                  {item.label}
+                </a>
+              ))}
             </div>
 
             {/* Mobile Menu Button */}
@@ -241,38 +303,29 @@ export default function Home() {
             </button>
           </div>
 
-          {/* Mobile Navigation */}
+          {/* Mobile Navigation dengan active state */}
           {isMenuOpen && (
             <div className="md:hidden">
               <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a 
-                  href="#home" 
-                  className="block px-3 py-2 rounded-md text-base font-medium hover:text-blue-600 hover:bg-gray-50"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  Home
-                </a>
-                <a 
-                  href="#about" 
-                  className="block px-3 py-2 rounded-md text-base font-medium hover:text-blue-600 hover:bg-gray-50"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  About
-                </a>
-                <a 
-                  href="#services" 
-                  className="block px-3 py-2 rounded-md text-base font-medium hover:text-blue-600 hover:bg-gray-50"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  Services
-                </a>
-                <a 
-                  href="#contact" 
-                  className="block px-3 py-2 rounded-md text-base font-medium hover:text-blue-600 hover:bg-gray-50"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  Contact
-                </a>
+                {[
+                  { id: 'home', label: 'Home' },
+                  { id: 'about', label: 'About' },
+                  { id: 'portfolio', label: 'Portfolio' },
+                  { id: 'contact', label: 'Contact' }
+                ].map((item) => (
+                  <a
+                    key={item.id}
+                    href={`#${item.id}`}
+                    className={`block px-3 py-2 rounded-md text-base font-medium ${
+                      activeSection === item.id
+                        ? 'text-blue-600 bg-gray-50'
+                        : 'hover:text-blue-600 hover:bg-gray-50'
+                    }`}
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {item.label}
+                  </a>
+                ))}
               </div>
             </div>
           )}
@@ -281,7 +334,7 @@ export default function Home() {
 
     {/* Hero Section dengan Slideshow */}
       <section id="home" className="pt-20 bg-gray-50 relative">
-        <div className="relative h-[600px] overflow-hidden" {...handlers}>
+        <div className="relative h-[900px] overflow-hidden" {...handlers}>
           {/* Tombol Previous */}
           <button 
             onClick={prevSlide}
@@ -360,7 +413,8 @@ export default function Home() {
       {/* About Section */}
       <section id="about" className="py-20">
         <div className="container mx-auto px-6">
-          <h2 className="text-3xl font-bold text-center mb-12">{aboutContent.title}</h2>
+          <h2 className="text-5xl font-bold text-center mb-12">{aboutContent.company.title}</h2>
+          <h2 className="text-3xl font-bold text-center mb-12">Tentang Kami</h2>
           <div className="grid md:grid-cols-2 gap-12">
             <div className="space-y-4">
               <h3 className="text-2xl font-semibold">{aboutContent.company.title}</h3>
@@ -379,11 +433,44 @@ export default function Home() {
               <p className="text-gray-600 mt-4">
                 {aboutContent.closing}
               </p>
-              <p className="font-semibold mt-4">
-                Hormat kami,<br />
-                {aboutContent.company.title}
+            </div>
+          </div>
+
+          {/* Visi & Misi dalam grid terpisah */}
+          <div className="grid md:grid-cols-2 gap-12 mt-4">
+            {/* Visi */}
+            <div className="bg-white p-6 rounded-lg">
+              <h3 className="text-2xl font-semibold mb-4">{aboutContent.visiMisi.visi.title}</h3>
+              <p className="text-gray-600">
+                {aboutContent.visiMisi.visi.content}
               </p>
             </div>
+
+            {/* Misi */}
+            <div className="bg-white p-6 rounded-lg">
+              <h3 className="text-2xl font-semibold mb-4">{aboutContent.visiMisi.misi.title}</h3>
+              <ul className="space-y-2">
+                {aboutContent.visiMisi.misi.points.map((point, index) => (
+                  <li key={index} className="flex items-start text-gray-600">
+                    <span className="mr-2">•</span>
+                    <span>{point}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          {/* Strategi Perusahaan */}
+          <div className="mt-8 bg-white p-6 rounded-lg">
+            <h3 className="text-2xl font-semibold mb-4">{aboutContent.strategi.title}</h3>
+            <ul className="space-y-4">
+              {aboutContent.strategi.points.map((point, index) => (
+                <li key={index} className="flex items-start text-gray-600">
+                  <span className="mr-2 font-bold">{index + 1}.</span>
+                  <span>{point}</span>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </section>
@@ -393,7 +480,7 @@ export default function Home() {
         <div className="container mx-auto px-6">
           <h2 className="text-3xl font-bold text-center mb-12">Portfolio</h2>
           
-          <div className="relative h-[500px] overflow-hidden rounded-xl">
+          <div className="relative h-[800px] overflow-hidden rounded-xl">
             {/* Navigation Buttons */}
             <button 
               onClick={prevPortfolioSlide}
@@ -444,10 +531,10 @@ export default function Home() {
                   style={{ objectFit: "cover" }}
                   priority={index === 0}
                 />
-                <div className="absolute inset-0 bg-black bg-opacity-40" />
+                <div className="absolute inset-0 bg-black bg-opacity-50" />
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="text-center text-white px-4">
-                    <h3 className="text-2xl mb-4">{slide.title}</h3>
+                    <h3 className="text-4xl mb-4">{slide.title}</h3>
                     <p className="text-xl mb-4">{slide.subtitle}</p>
                   </div>
                 </div>
@@ -471,80 +558,27 @@ export default function Home() {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="py-20 bg-gray-50">
-        <div className="container mx-auto px-6">
-          <h2 className="text-3xl font-bold text-center mb-12">Data Perusahaan</h2>
-          <div className="max-w-3xl mx-auto bg-white rounded-lg shadow-lg p-8">
-            <div className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="font-semibold">Nama Perusahaan</div>
-                <div className="md:col-span-2">PT. Milenial Alaliim Indonesia</div>
-              </div>
-              
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="font-semibold">Alamat Perusahaan</div>
-                <div className="md:col-span-2">Jl. Trunojoyo III, RT. 002 / RW. 010, Pejagan, Bangkalan 69112</div>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="font-semibold">Telepon</div>
-                <div className="md:col-span-2">
-                  <a href="tel:081314680003" className="text-blue-600 hover:underline">081314680003</a>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="font-semibold">Email</div>
-                <div className="md:col-span-2">
-                  <a href="mailto:irawan.vicka@yahoo.com" className="text-blue-600 hover:underline">irawan.vicka@yahoo.com</a>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="font-semibold">Akte Notaris Pendirian</div>
-                <div className="md:col-span-2">AHU-017122.AH.01.30. Tahun 2024</div>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="font-semibold">NPWP Perusahaan</div>
-                <div className="md:col-span-2">13.902.810.4-644.000</div>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="font-semibold">Rekening Bank</div>
-                <div className="md:col-span-2">1850752547 (BCA)</div>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="font-semibold">Bidang Usaha</div>
-                <div className="md:col-span-2">Pelatihan Kerja Pariwisata dan Perhotelan Swasta</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Contact Section */}
     <section id="contact" className="py-20 bg-white">
       <div className="container mx-auto px-6">
         <h2 className="text-3xl font-bold text-center mb-12">Hubungi Kami</h2>
         
         <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
           {Object.entries(contactInfo).map(([key, value]) => (
-            <div key={key} className="flex flex-col items-center text-center p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow">
+            <a 
+              key={key}
+              href={value.link}
+              className="flex flex-col items-center text-center p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow cursor-pointer"
+              target={key === 'location' ? '_blank' : undefined}
+              rel={key === 'location' ? 'noopener noreferrer' : undefined}
+            >
               <div className="mb-4 text-blue-600">
                 {value.icon}
               </div>
               <h3 className="text-xl font-semibold mb-2">{value.title}</h3>
-              <a 
-                href={value.link}
-                className="text-gray-600 hover:text-blue-600 transition-colors"
-                target={key === 'location' ? '_blank' : undefined}
-                rel={key === 'location' ? 'noopener noreferrer' : undefined}
-              >
+              <span className="text-gray-600 hover:text-blue-600 transition-colors">
                 {value.info}
-              </a>
-            </div>
+              </span>
+            </a>
           ))}
         </div>
 
@@ -595,7 +629,7 @@ export default function Home() {
             >
               <Image
                 src={image}
-                alt={`Lokasi PT Millenial Alaliim Indonesia ${index + 1}`}
+                alt={`Lokasi PT. Millenial Alaliim Indonesia ${index + 1}`}
                 fill
                 style={{ objectFit: "cover" }}
                 priority={index === 0}
@@ -620,10 +654,114 @@ export default function Home() {
     </section>
 
       {/* Footer */}
-      <footer className="bg-gray-800 text-white py-8">
-        <div className="container mx-auto px-6">
-          <div className="text-center">
-            <p>&copy; 2024 PT. Milenial Alaliim Indonesia. All rights reserved.</p>
+      <footer className="bg-gradient-to-r from-blue-500 to-blue-800">
+        <div className="container mx-auto px-6 py-12">
+          <div className="grid md:grid-cols-3 gap-12 mb-8">
+            {/* Company Info */}
+            <div className="space-y-4">
+              <div className="flex items-center space-x-3">
+                <Image
+                  src="/images/logo.png"
+                  alt="PT Millenial Alaliim Indonesia Logo"
+                  width={50}
+                  height={50}
+                  className="rounded-lg"
+                />
+                <div className="text-white">
+                  <h3 className="font-bold text-lg">PT. Milenial Alaliim</h3>
+                  <p className="text-blue-200">Indonesia</p>
+                </div>
+              </div>
+              <p className="text-blue-100 text-sm">
+                Pelatihan Kerja Pariwisata dan Perhotelan Swasta yang berpengalaman dalam kerjasama dengan perusahaan-perusahaan nasional.
+              </p>
+            </div>
+
+            {/* Quick Links */}
+            <div>
+              <h3 className="text-white font-semibold mb-4">Quick Links</h3>
+              <ul className="space-y-2">
+                {[
+                  { href: '#home', label: 'Home' },
+                  { href: '#about', label: 'About Us' },
+                  { href: '#portfolio', label: 'Portfolio' },
+                  { href: '#contact', label: 'Contact' }
+                ].map((link) => (
+                  <li key={link.href}>
+                    <a 
+                      href={link.href}
+                      className="text-blue-200 hover:text-white transition-colors duration-200 text-sm flex items-center"
+                    >
+                      <svg 
+                        className="w-3 h-3 mr-2" 
+                        fill="currentColor" 
+                        viewBox="0 0 20 20"
+                      >
+                        <path 
+                          fillRule="evenodd" 
+                          d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" 
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                      {link.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Contact Info */}
+            <div>
+              <h3 className="text-white font-semibold mb-4">Contact Us</h3>
+              <ul className="space-y-3">
+                <li className="flex items-start space-x-3 text-blue-200">
+                  <svg className="w-5 h-5 mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
+                  </svg>
+                  <span className="text-sm">Jl. Trunojoyo III, RT. 002 / RW. 010, Pejagan, Bangkalan 69112</span>
+                </li>
+                <li>
+                  <a href="tel:+6281314680003" className="flex items-center space-x-3 text-blue-200 hover:text-white transition-colors duration-200">
+                    <svg className="w-5 h-5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
+                    </svg>
+                    <span className="text-sm">+62 813-1468-0003</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="mailto:irawan.vicka@yahoo.com" className="flex items-center space-x-3 text-blue-200 hover:text-white transition-colors duration-200">
+                    <svg className="w-5 h-5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                      <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+                    </svg>
+                    <span className="text-sm">irawan.vicka@yahoo.com</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          {/* Copyright */}
+          <div className="pt-8 mt-8 border-t border-blue-700">
+            <div className="flex flex-col md:flex-row justify-between items-center">
+              <p className="text-blue-200 text-sm">
+                &copy; {new Date().getFullYear()} PT. Milenial Alaliim Indonesia. All rights reserved.
+              </p>
+              <div className="flex space-x-6 mt-4 md:mt-0">
+                <a href="#" className="text-blue-200 hover:text-white transition-colors duration-200">
+                  <span className="sr-only">Facebook</span>
+                  <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" />
+                  </svg>
+                </a>
+                <a href="#" className="text-blue-200 hover:text-white transition-colors duration-200">
+                  <span className="sr-only">Instagram</span>
+                  <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                    <path fillRule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clipRule="evenodd" />
+                  </svg>
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </footer>
