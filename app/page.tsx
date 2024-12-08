@@ -7,7 +7,7 @@ export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [activeSection, setActiveSection] = useState('home');
-  const [currentPortfolioSlide, setCurrentPortfolioSlide] = useState(0);
+  const [currentPortofolioSlide, setCurrentPortofolioSlide] = useState(0);
   const [currentLocationSlide, setCurrentLocationSlide] = useState(0);
 
   const delaySlides = 8000
@@ -76,7 +76,7 @@ export default function Home() {
   };
 
    // Array data portfolio untuk slideshow
-   const portfolioSlides = [
+   const portofolioSlides = [
     {
       image: "/images/porto-1.png",
       title: "(ACCOMODATION CLERK / ASST. EXECUTIVE HOUSEKEEPER DI KAPAL PESIAR)",
@@ -168,24 +168,24 @@ export default function Home() {
   // Effect untuk slideshow portfolio
   useEffect(() => {
     const timer = setInterval(() => {
-      setCurrentPortfolioSlide((prevSlide) => 
-        prevSlide === portfolioSlides.length - 1 ? 0 : prevSlide + 1
+      setCurrentPortofolioSlide((prevSlide) => 
+        prevSlide === portofolioSlides.length - 1 ? 0 : prevSlide + 1
       );
     }, delaySlides);
 
     return () => clearInterval(timer);
-  }, [currentPortfolioSlide]);
+  }, [currentPortofolioSlide]);
 
 
-  const nextPortfolioSlide = () => {
-    setCurrentPortfolioSlide((prevSlide) => 
-      prevSlide === portfolioSlides.length - 1 ? 0 : prevSlide + 1
+  const nextPortofolioSlide = () => {
+    setCurrentPortofolioSlide((prevSlide) => 
+      prevSlide === portofolioSlides.length - 1 ? 0 : prevSlide + 1
     );
   };
 
-  const prevPortfolioSlide = () => {
-    setCurrentPortfolioSlide((prevSlide) => 
-      prevSlide === 0 ? portfolioSlides.length - 1 : prevSlide - 1
+  const prevPortofolioSlide = () => {
+    setCurrentPortofolioSlide((prevSlide) => 
+      prevSlide === 0 ? portofolioSlides.length - 1 : prevSlide - 1
     );
   };
 
@@ -216,7 +216,7 @@ export default function Home() {
   // Tambahkan useEffect untuk mendeteksi scroll
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['home', 'about', 'portfolio', 'contact'];
+      const sections = ['home', 'about', 'portofolio', 'contact'];
       const scrollPosition = window.scrollY + 100; 
 
       for (const section of sections) {
@@ -261,7 +261,7 @@ export default function Home() {
               {[
                 { id: 'home', label: 'Home' },
                 { id: 'about', label: 'About Us' },
-                { id: 'portfolio', label: 'Portfolio' },
+                { id: 'portofolio', label: 'Portofolio' },
                 { id: 'contact', label: 'Contact' }
               ].map((item) => (
                 <a
@@ -315,7 +315,7 @@ export default function Home() {
                 {[
                   { id: 'home', label: 'Home' },
                   { id: 'about', label: 'About' },
-                  { id: 'portfolio', label: 'Portfolio' },
+                  { id: 'portofolio', label: 'Portofolio' },
                   { id: 'contact', label: 'Contact' }
                 ].map((item) => (
                   <a
@@ -482,14 +482,14 @@ export default function Home() {
       </section>
 
       {/* Portfolio Section */}
-      <section id="portfolio" className="py-20 bg-white">
+      <section id="portofolio" className="py-20 bg-white">
         <div className="container mx-auto px-6">
-          <h2 className="text-3xl font-bold text-black text-center mb-12">Portfolio</h2>
+          <h2 className="text-3xl font-bold text-black text-center mb-12">Portofolio</h2>
           
           <div className="relative h-[800px] overflow-hidden rounded-xl">
             {/* Navigation Buttons */}
             <button 
-              onClick={prevPortfolioSlide}
+              onClick={prevPortofolioSlide}
               className="absolute left-4 top-1/2 -translate-y-1/2 z-10 bg-black/30 hover:bg-black/50 text-white w-10 h-10 rounded-full flex items-center justify-center transition-colors"
               aria-label="Previous slide"
             >
@@ -506,7 +506,7 @@ export default function Home() {
             </button>
 
             <button 
-              onClick={nextPortfolioSlide}
+              onClick={nextPortofolioSlide}
               className="absolute right-4 top-1/2 -translate-y-1/2 z-10 bg-black/30 hover:bg-black/50 text-white w-10 h-10 rounded-full flex items-center justify-center transition-colors"
               aria-label="Next slide"
             >
@@ -523,11 +523,11 @@ export default function Home() {
             </button>
 
             {/* Slides */}
-            {portfolioSlides.map((slide, index) => (
+            {portofolioSlides.map((slide, index) => (
               <div
                 key={index}
                 className={`absolute top-0 left-0 w-full h-full transition-opacity duration-1000 ${
-                  currentPortfolioSlide === index ? "opacity-100" : "opacity-0"
+                  currentPortofolioSlide === index ? "opacity-100" : "opacity-0"
                 }`}
               >
                 <Image
@@ -549,13 +549,13 @@ export default function Home() {
 
             {/* Slide Indicators */}
             <div className="absolute bottom-5 left-1/2 transform -translate-x-1/2 flex space-x-2">
-              {portfolioSlides.map((_, index) => (
+              {portofolioSlides.map((_, index) => (
                 <button
                   key={index}
                   className={`w-3 h-3 rounded-full transition-colors ${
-                    currentPortfolioSlide === index ? "bg-white" : "bg-white/50"
+                    currentPortofolioSlide === index ? "bg-white" : "bg-white/50"
                   }`}
-                  onClick={() => setCurrentPortfolioSlide(index)}
+                  onClick={() => setCurrentPortofolioSlide(index)}
                 />
               ))}
             </div>
@@ -576,7 +576,7 @@ export default function Home() {
           >
             <div className="mb-4 text-blue-600">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.54 1.06l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
               </svg>
             </div>
             <h3 className="text-xl font-semibold mb-2 text-black">Telepon</h3>
@@ -723,7 +723,7 @@ export default function Home() {
                 {[
                   { href: '#home', label: 'Home' },
                   { href: '#about', label: 'About Us' },
-                  { href: '#portfolio', label: 'Portfolio' },
+                  { href: '#portofolio', label: 'Portofolio' },
                   { href: '#contact', label: 'Contact' }
                 ].map((link) => (
                   <li key={link.href}>
