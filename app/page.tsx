@@ -248,12 +248,12 @@ export default function Home() {
             <div className="flex items-center">
               <Image
                 src="/images/logo.png"  // Sesuaikan dengan nama file logo Anda
-                alt="PT Millenial Alaliim Indonesia Logo"
+                alt="PT Milenial Alaliim Indonesia Logo"
                 width={40}
                 height={40}
                 className="mr-3"
               />
-              <span className="text-sm font-semibold text-black">PT. MILLENIAL ALALIIM <br /> INDONESIA</span>
+              <span className="text-sm font-semibold text-black">PT. MILENIAL AL 'ALIIM <br /> INDONESIA</span>
             </div>
             
             {/* Desktop Navigation dengan active state */}
