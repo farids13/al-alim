@@ -253,7 +253,7 @@ export default function Home() {
                 height={40}
                 className="mr-3"
               />
-              <span className="text-sm font-semibold text-black">PT. MILENIAL AL 'ALIIM <br /> INDONESIA</span>
+              <span className="text-sm font-semibold text-black">PT. MILENIAL ALALIIM <br /> INDONESIA</span>
             </div>
             
             {/* Desktop Navigation dengan active state */}
