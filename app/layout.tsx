@@ -14,7 +14,7 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Milenial Al-Aliim Indonesia",
+  title: "Milenial Al 'Aliim Indonesia",
   description: "Training Center Hotel & Cruises Ship - Pelatihan Kerja Pariwisata dan Perhotelan Swasta yang berpengalaman dalam kerjasama dengan perusahaan-perusahaan nasional.",
   keywords: ["training center", "hotel", "cruise ship", "pelatihan kerja", "pariwisata", "perhotelan", "bangkalan", "madura"],
   authors: [{ name: "PT. Milenial Alaliim Indonesia" }],
